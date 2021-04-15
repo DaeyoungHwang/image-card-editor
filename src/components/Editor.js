@@ -188,9 +188,9 @@ const drawImage = (ctx, img, filter) => {
 };
 
 // text drawing
-const drawText = (ctx, fontSize, isFocused, isEditing, mouseHeld, textRect, text, font) => {
+const drawText = (ctx, fontSize, isFocused, isEditing, mouseHeld, textRect, text, font, fontColor) => {
   ctx.font = `${fontSize}px ${font}`;
-  ctx.fillStyle = "white";
+  ctx.fillStyle = fontColor;
   const [lines, indexMap] = splitTextToLines(ctx, textRect.w, text);
 
   const spaced = fontSize * 1.3;
@@ -248,6 +248,7 @@ const mousePositionDiff = (prevPos, currPos) => {
 const Editor = ({
   fontSize = 25,
   font = 'Georgia',
+  fontColor = "white",
   image = 'https://images.unsplash.com/photo-1458640904116-093b74971de9?fm=jpg',
   imageSize = 1,
   imageFilter,
@@ -258,7 +259,7 @@ const Editor = ({
   const [isEditing, setIsEditing] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [held, setHeld] = useState(false);
-  const [textRect, setTextRect] = useState({ x: 10, y: 10, w: 300, h: 100, leftEditX: 10, leftEditY: 10, rightEditX: 100, rightEditY: 100});
+  const [textRect, setTextRect] = useState({ x: 50, y: 50, w: 400, h: 100, leftEditX: 10, leftEditY: 10, rightEditX: 100, rightEditY: 100});
   const [textRectResizeMode, setTextRectResizeMode] = useState(0);
   const [startCursor, setStartCursor] = useState(0);
   const [endCursor, setEndCursor] = useState(0);
@@ -275,6 +276,7 @@ const Editor = ({
   //store에 캐싱된 data를 불러와 그리는 형식으로
   useEffect(() => {
     image && drawEditor(image);
+    console.log(fontSize);
   });
 
   const drawEditor = (img) => {
@@ -282,7 +284,7 @@ const Editor = ({
     drawImage(ctx, img, imageFilter);
 
     ///////////////contentText
-    drawText(ctx, fontSize, isFocused, isEditing, held, textRect, text, font);
+    drawText(ctx, fontSize, isFocused, isEditing, held, textRect, text, font, fontColor);
 
     if(false){
       drawCursor(ctx, startCursor, fontSize, font, text, textRect);

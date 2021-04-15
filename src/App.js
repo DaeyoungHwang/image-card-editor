@@ -27,17 +27,12 @@ const App = () => {
   const [selectedData, setSelectedData] = useState('');
   const [imageSize, setImageSize] = useState('');
   const [imageFilter, setImageFilter] = useState('');
+  const [font, setFont] = useState('Georgia');
+  const [fontColor, setFontColor] = useState('white');
+  const [fontSize, setFontSize] = useState(25);
 
   const onChangeImage = (data) => {
     setSelectedData(data);
-  }
-
-  const onChangeImageSize = (id) => {
-    setImageSize(id);
-  }
-
-  const onChangeImageFilter = (id) => {
-    setImageFilter(id);
   }
 
   return(
@@ -46,10 +41,12 @@ const App = () => {
         <ImageSelector onChangeImage={onChangeImage} />
       </CardLayout>
       <CardLayout title={"canvas"} width={"550px"}>
-        <Editor image={selectedData} imageSize={imageSize} imageFilter={imageFilter} />
+        <Editor image={selectedData} imageSize={imageSize} imageFilter={imageFilter}
+          font={font} fontSize={fontSize} fontColor={fontColor} />
       </CardLayout>
       <div>
-        <Panel image={selectedData} onChangeImageSize={onChangeImageSize} onChangeImageFilter={onChangeImageFilter}/>
+        <Panel image={selectedData} onChangeImageSize={setImageSize} onChangeImageFilter={setImageFilter}
+          onChangeFont={setFont} onChangeFontSize={setFontSize} onChangeFontColor={setFontColor} />
       </div>
     </AppLayout>
   )
