@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import editor from './editor';
+import imageSelector from './imageSelector';
 
 const rootReducer = combineReducers({
-    editor,
+    imageSelector,
 });
 
 export default rootReducer;
